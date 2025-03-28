@@ -22,7 +22,6 @@ class TranslatableCustomIdentifierEntity implements TranslatableInterface
     private int $idColumn;
 
     /**
-     * @param mixed[] $arguments
      * @return mixed
      */
     public function __call(string $method, array $arguments)

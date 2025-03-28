@@ -6,33 +6,15 @@ namespace Knp\DoctrineBehaviors\Contract\Entity;
 
 interface BlameableInterface
 {
-    /**
-     * @param int|object|string $user
-     */
-    public function setCreatedBy($user): void;
+    public function setCreatedBy(object|int|string $user): void;
 
-    /**
-     * @param int|object|string $user
-     */
-    public function setUpdatedBy($user): void;
+    public function setUpdatedBy(object|int|string $user): void;
 
-    /**
-     * @param int|object|string $user
-     */
-    public function setDeletedBy($user): void;
+    public function setDeletedBy(object|int|string $user): void;
 
-    /**
-     * @return int|object|string
-     */
-    public function getCreatedBy();
+    public function getCreatedBy(): null|object|int|string;
 
-    /**
-     * @return int|object|string
-     */
-    public function getUpdatedBy();
+    public function getUpdatedBy(): null|object|int|string;
 
-    /**
-     * @return int|object|string|null
-     */
-    public function getDeletedBy();
+    public function getDeletedBy(): object|int|string|null;
 }

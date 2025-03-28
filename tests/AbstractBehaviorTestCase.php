@@ -14,10 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class AbstractBehaviorTestCase extends TestCase
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
     private ContainerInterface $container;
 
@@ -25,7 +22,6 @@ abstract class AbstractBehaviorTestCase extends TestCase
     {
         $doctrineBehaviorsKernel = new DoctrineBehaviorsKernel($this->provideCustomConfigs());
         $doctrineBehaviorsKernel->boot();
-
         $this->container = $doctrineBehaviorsKernel->getContainer();
 
         $this->entityManager = $this->getService('doctrine.orm.entity_manager');

@@ -14,13 +14,14 @@ trait SluggableMethodsTrait
         $this->slug = $slug;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
     /**
      * Generates and sets the entity's slug. Called prePersist and preUpdate
+     * @throws SluggableException
      */
     public function generateSlug(): void
     {
@@ -51,6 +52,9 @@ trait SluggableMethodsTrait
         return true;
     }
 
+    /**
+     * @throws SluggableException
+     */
     private function generateSlugValue(array $values): string
     {
         $usableValues = [];
@@ -70,6 +74,9 @@ trait SluggableMethodsTrait
         return strtolower($unicodeString->toString());
     }
 
+    /**
+     * @throws SluggableException
+     */
     private function ensureAtLeastOneUsableValue(array $values, array $usableValues): void
     {
         if (count($usableValues) >= 1) {
@@ -85,7 +92,7 @@ trait SluggableMethodsTrait
     /**
      * @return mixed|null
      */
-    private function resolveFieldValue(string $field)
+    private function resolveFieldValue(string $field): mixed
     {
         if (property_exists($this, $field)) {
             return $this->{$field};

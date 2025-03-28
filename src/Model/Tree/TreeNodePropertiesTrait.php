@@ -14,6 +14,8 @@ trait TreeNodePropertiesTrait
      */
     protected $materializedPath = '';
 
+    protected $parentNodePath = '';
+
     /**
      * @var Collection|TreeNodeInterface[]
      */

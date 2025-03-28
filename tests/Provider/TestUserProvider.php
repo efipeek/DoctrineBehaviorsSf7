@@ -17,7 +17,7 @@ final class TestUserProvider implements UserProviderInterface
         $this->user = $user;
     }
 
-    public function provideUser(): string
+    public function provideUser(): object|string|null
     {
         return $this->user;
     }

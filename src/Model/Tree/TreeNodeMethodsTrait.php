@@ -11,13 +11,11 @@ use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
 use Knp\DoctrineBehaviors\Exception\ShouldNotHappenException;
 use Knp\DoctrineBehaviors\Exception\TreeException;
 use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 
 trait TreeNodeMethodsTrait
 {
-    /**
-     * @return string|int|null
-     */
-    public function getNodeId()
+    public function getNodeId(): int|string|null
     {
         return $this->getId();
     }
@@ -41,12 +39,18 @@ trait TreeNodeMethodsTrait
         return $this->materializedPath;
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     */
     public function setMaterializedPath(string $path): void
     {
         $this->materializedPath = $path;
         $this->setParentMaterializedPath($this->getParentMaterializedPath());
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     */
     public function getParentMaterializedPath(): string
     {
         $path = $this->getExplodedPath();
@@ -60,6 +64,9 @@ trait TreeNodeMethodsTrait
         $this->parentNodePath = $path;
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     */
     public function getRootMaterializedPath(): string
     {
         $explodedPath = $this->getExplodedPath();
@@ -67,11 +74,17 @@ trait TreeNodeMethodsTrait
         return static::getMaterializedPathSeparator() . array_shift($explodedPath);
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     */
     public function getNodeLevel(): int
     {
         return count($this->getExplodedPath());
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     */
     public function isRootNode(): bool
     {
         return self::getMaterializedPathSeparator() === $this->getParentMaterializedPath();
@@ -108,11 +121,18 @@ trait TreeNodeMethodsTrait
             && str_starts_with($this->getRealMaterializedPath(), $treeNode->getRealMaterializedPath());
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     */
     public function isChildNodeOf(TreeNodeInterface $treeNode): bool
     {
         return $this->getParentMaterializedPath() === $treeNode->getRealMaterializedPath();
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     * @throws TreeException
+     */
     public function setChildNodeOf(?TreeNodeInterface $treeNode = null): void
     {
         $id = $this->getNodeId();
@@ -147,6 +167,10 @@ trait TreeNodeMethodsTrait
         return $this->parentNode;
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     * @throws TreeException
+     */
     public function setParentNode(TreeNodeInterface $treeNode): void
     {
         $this->parentNode = $treeNode;
@@ -182,7 +206,8 @@ trait TreeNodeMethodsTrait
     }
 
     /**
-     * @param Closure $prepare a function to prepare the node before putting into the result
+     * @param Closure|null $prepare a function to prepare the node before putting into the result
+     * @throws JsonException
      */
     public function toJson(?Closure $prepare = null): string
     {
@@ -192,7 +217,7 @@ trait TreeNodeMethodsTrait
     }
 
     /**
-     * @param Closure $prepare a function to prepare the node before putting into the result
+     * @param Closure|null $prepare a function to prepare the node before putting into the result
      */
     public function toArray(?Closure $prepare = null, ?array &$tree = null): array
     {
@@ -223,8 +248,8 @@ trait TreeNodeMethodsTrait
     }
 
     /**
-     * @param Closure $prepare a function to prepare the node before putting into the result
-     * @param array $tree a reference to an array, used internally for recursion
+     * @param Closure|null $prepare a function to prepare the node before putting into the result
+     * @param array|null $tree a reference to an array, used internally for recursion
      */
     public function toFlatArray(?Closure $prepare = null, ?array &$tree = null): array
     {
@@ -268,16 +293,14 @@ trait TreeNodeMethodsTrait
         unset($this->getChildNodes()[$offset]);
     }
 
-    /**
-     * @return mixed
-     */
-    public function offsetGet(mixed $offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->getChildNodes()[$offset];
     }
 
     /**
      * @return string[]
+     * @throws ShouldNotHappenException
      */
     protected function getExplodedPath(): array
     {

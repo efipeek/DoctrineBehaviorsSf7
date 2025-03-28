@@ -33,6 +33,8 @@ trait TimestampableMethodsTrait
 
     /**
      * Updates createdAt and updatedAt timestamps.
+     * @throws ShouldNotHappenException
+     * @throws \DateInvalidTimeZoneException
      */
     public function updateTimestamps(): void
     {

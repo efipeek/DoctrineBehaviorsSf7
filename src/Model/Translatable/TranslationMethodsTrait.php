@@ -18,9 +18,11 @@ trait TranslationMethodsTrait
     /**
      * Sets entity, that this translation should be mapped to.
      */
-    public function setTranslatable(TranslatableInterface $translatable): void
+    public function setTranslatable(TranslatableInterface $translatable): static
     {
         $this->translatable = $translatable;
+
+        return $this;
     }
 
     /**
@@ -36,7 +38,7 @@ trait TranslationMethodsTrait
         $this->locale = $locale;
     }
 
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }

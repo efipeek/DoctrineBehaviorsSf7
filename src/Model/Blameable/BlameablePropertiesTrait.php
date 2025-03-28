@@ -6,18 +6,9 @@ namespace Knp\DoctrineBehaviors\Model\Blameable;
 
 trait BlameablePropertiesTrait
 {
-    /**
-     * @var string|int|object
-     */
-    protected $createdBy;
+    protected null|string|int|object $createdBy = null;
 
-    /**
-     * @var string|int|object
-     */
-    protected $updatedBy;
+    protected null|string|int|object $updatedBy = null;
 
-    /**
-     * @var string|int|object
-     */
-    protected $deletedBy;
+    protected null|string|int|object $deletedBy = null;
 }
