@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Knp\DoctrineBehaviors\Tests\Fixtures\Entity;
 
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -28,7 +29,7 @@ class LoggableEntity implements LoggableInterface
     /**
      * @var string[]|null
      */
-    #[Column(type: 'array', nullable: true)]
+    #[Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private array|null $roles = null;
 
     #[Column(type: 'date', nullable: true)]

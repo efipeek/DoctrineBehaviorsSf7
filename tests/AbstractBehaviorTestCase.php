@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Knp\DoctrineBehaviors\Tests;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Logging\DebugStack;
-use Doctrine\DBAL\Platforms\PostgreSQL94Platform;
+use Doctrine\DBAL\Driver\PgSQL\Driver;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\DoctrineBehaviors\Tests\HttpKernel\DoctrineBehaviorsKernel;
 use PHPUnit\Framework\TestCase;
@@ -40,7 +39,7 @@ abstract class AbstractBehaviorTestCase extends TestCase
         /** @var Connection $connection */
         $connection = $this->entityManager->getConnection();
 
-        return $connection->getDatabasePlatform() instanceof PostgreSQL94Platform;
+        return $connection->getDriver() instanceof Driver;
     }
 
     /**
@@ -51,16 +50,16 @@ abstract class AbstractBehaviorTestCase extends TestCase
         return [];
     }
 
-    protected function createAndRegisterDebugStack(): DebugStack
-    {
-        $debugStack = new DebugStack();
-
-        $this->entityManager->getConnection()
-            ->getConfiguration()
-            ->setSQLLogger($debugStack);
-
-        return $debugStack;
-    }
+//    protected function createAndRegisterDebugStack(): DebugStack
+//    {
+//        $debugStack = new DebugStack();
+//
+//        $this->entityManager->getConnection()
+//            ->getConfiguration()
+//            ->setSQLLogger($debugStack);
+//
+//        return $debugStack;
+//    }
 
     /**
      * @template T as object
